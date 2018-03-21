@@ -1,0 +1,56 @@
+<ons-page id="sign_up">
+  <ons-toolbar>
+    <div class="center">Sign In</div>
+  </ons-toolbar>
+  <div style="text-align: center; margin-top: 30px;">
+    <p>
+      <ons-input id="username" modifier="underbar" placeholder="Username" float></ons-input>
+    </p>
+    <p>
+      <ons-input id="email" modifier="underbar" placeholder="Email" float></ons-input>
+    </p>
+    <p>
+      <ons-input id="phone_number" modifier="underbar" placeholder="000-000-0000" float></ons-input>
+    </p>
+    <p>
+      <ons-input id="password" modifier="underbar" type="password" placeholder="Password" float></ons-input>
+    </p>
+    <p style="margin-top: 30px;">
+      <ons-button id="sign_up_button">Sign up</ons-button> or 
+      <ons-button modifier="quiet" id="to_sign_in">Sign in</ons-button>
+    </p>
+  </div>    
+  <script>
+    document.addEventListener('init', function(event) {
+      const page = event.target;
+      if (page.id !== 'sign_up') return;
+      page.querySelector('#sign_up_button').onclick = (e) => {
+        const username = page.querySelector('#username').value;
+        const password = page.querySelector('#password').value;
+        const email = page.querySelector('#email').value;
+        const phone_number = page.querySelector('#phone_number').value;
+        Auth.signUp({
+          username,
+          password,
+          attributes: {
+            email,
+            phone_number
+          },
+          validationData: []
+        })
+        .then(data => {
+          document.getElementById('nav').pushPage('code.html', {
+            data: {
+              user: data.user
+            }
+          })
+        })
+        .catch(err => console.log(err));
+      };
+      
+      page.querySelector('#to_sign_in').onclick = (e) => {
+        document.getElementById('nav').pushPage(`signin.html`);
+      }
+    });
+  </script>
+</ons-page>

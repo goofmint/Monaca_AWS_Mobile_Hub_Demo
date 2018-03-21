@@ -1,0 +1,36 @@
+<ons-page id="code">
+  <ons-toolbar>
+    <div class="left"><ons-back-button>Back</ons-back-button></div>
+    <div class="center">Input Code</div>
+  </ons-toolbar>
+  <div style="text-align: center; margin-top: 30px;">
+    <p>
+      <ons-input id="code" modifier="underbar" placeholder="999999" float></ons-input>
+    </p>
+    <p style="margin-top: 30px;">
+      <ons-button id="confirm">Input code</ons-button>
+    </p>
+  </div>    
+  <script>
+    document.addEventListener('init', (event) => {
+      const page = event.target;
+      if (page.id !== 'code') return;
+      page.querySelector('#confirm').onclick = (e) => {
+        const user = page.data.user;
+        const code = page.querySelector('#code').value;
+        Auth.confirmSignUp(user.username, code)
+          .then(data => {
+            if (data === 'SUCCESS') {
+              localStorage.setItem('username', username);
+              document.getElementById('nav').pushPage('signin.html', {
+                data: {
+                  username: user.username
+                }
+              });
+            }
+          })
+          .catch(err => console.log(err));
+      }
+    });
+  </script>
+</ons-page>

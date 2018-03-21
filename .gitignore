@@ -1,0 +1,13 @@
+#awsmobilejs
+aws-info.json
+project-info.json
+aws-exports.js
+awsmobilejs/.awsmobile/backend-build
+awsmobilejs/\#current-backend-info
+~awsmobilejs-*/.DS_Store
+node_modules/
+package-lock.json
+.DS_Store
+www/awsmobilejs/#current-backend-info/backend-details.json
+www/awsmobilejs/
+www/js/app.js

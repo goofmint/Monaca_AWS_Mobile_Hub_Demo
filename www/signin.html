@@ -1,0 +1,41 @@
+<ons-page id="signin">
+  <ons-toolbar>
+    <div class="left"><ons-back-button>Back</ons-back-button></div>
+    <div class="center">Sign up</div>
+  </ons-toolbar>
+  <div style="text-align: center; margin-top: 30px;">
+    <p>
+      <ons-input id="username" modifier="underbar" placeholder="Username" float></ons-input>
+    </p>
+    <p>
+      <ons-input id="password" modifier="underbar" type="password" placeholder="Password" float></ons-input>
+    </p>
+    <p style="margin-top: 30px;">
+      <ons-button id="sign_in_button">Sign in</ons-button>
+    </p>
+  </div>    
+  <script>
+    document.addEventListener('show', function(event) {
+      const page = event.target;
+      if (page.id !== 'signin') return;
+      const username = page.data.username || localStorage.getItem('username');
+      if (username)
+        page.querySelector('#username').value = username;
+    });
+    
+    document.addEventListener('init', (event) => {
+      const page = event.target;
+      if (page.id !== 'signin') return;
+      page.querySelector('#sign_in_button').onclick = (e) => {
+        const username = page.querySelector('#username').value;
+        const password = page.querySelector('#password').value;
+        Auth.signIn(username, password)
+          .then(user => {
+            localStorage.setItem('username', user.username);
+            document.getElementById('nav').pushPage('info.html');
+          })
+        .catch(err => console.log(err));
+      };
+    });
+  </script>
+</ons-page>
