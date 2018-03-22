@@ -1,4 +1,4 @@
-<ons-page id="sign_up">
+<ons-page>
   <ons-toolbar>
     <div class="center">Sign In</div>
   </ons-toolbar>
@@ -10,7 +10,7 @@
       <ons-input id="email" modifier="underbar" placeholder="Email" float></ons-input>
     </p>
     <p>
-      <ons-input id="phone_number" modifier="underbar" placeholder="000-000-0000" float></ons-input>
+      <ons-input id="phone_number" modifier="underbar" placeholder="+81801234567" float></ons-input>
     </p>
     <p>
       <ons-input id="password" modifier="underbar" type="password" placeholder="Password" float></ons-input>
@@ -21,14 +21,12 @@
     </p>
   </div>    
   <script>
-    document.addEventListener('init', function(event) {
-      const page = event.target;
-      if (page.id !== 'sign_up') return;
-      page.querySelector('#sign_up_button').onclick = (e) => {
-        const username = page.querySelector('#username').value;
-        const password = page.querySelector('#password').value;
-        const email = page.querySelector('#email').value;
-        const phone_number = page.querySelector('#phone_number').value;
+    ons.getScriptPage().onInit = function() {
+      this.querySelector('#sign_up_button').onclick = (e) => {
+        const username = this.querySelector('#username').value;
+        const password = this.querySelector('#password').value;
+        const email = this.querySelector('#email').value;
+        const phone_number = this.querySelector('#phone_number').value;
         Auth.signUp({
           username,
           password,
@@ -48,9 +46,9 @@
         .catch(err => console.log(err));
       };
       
-      page.querySelector('#to_sign_in').onclick = (e) => {
+      this.querySelector('#to_sign_in').onclick = (e) => {
         document.getElementById('nav').pushPage(`signin.html`);
       }
-    });
+    };
   </script>
 </ons-page>

@@ -1,4 +1,4 @@
-<ons-page id="code">
+<ons-page>
   <ons-toolbar>
     <div class="left"><ons-back-button>Back</ons-back-button></div>
     <div class="center">Input Code</div>
@@ -12,12 +12,10 @@
     </p>
   </div>    
   <script>
-    document.addEventListener('init', (event) => {
-      const page = event.target;
-      if (page.id !== 'code') return;
-      page.querySelector('#confirm').onclick = (e) => {
-        const user = page.data.user;
-        const code = page.querySelector('#code').value;
+    ons.getScriptPage().onInit = function() {
+      this.querySelector('#confirm').onclick = (e) => {
+        const user = this.data.user;
+        const code = this.querySelector('#code').value;
         Auth.confirmSignUp(user.username, code)
           .then(data => {
             if (data === 'SUCCESS') {
@@ -31,6 +29,6 @@
           })
           .catch(err => console.log(err));
       }
-    });
+    };
   </script>
 </ons-page>

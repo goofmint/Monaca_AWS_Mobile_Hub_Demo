@@ -1,4 +1,4 @@
-<ons-page id="signin">
+<ons-page>
   <ons-toolbar>
     <div class="left"><ons-back-button>Back</ons-back-button></div>
     <div class="center">Sign up</div>
@@ -15,20 +15,17 @@
     </p>
   </div>    
   <script>
-    document.addEventListener('show', function(event) {
-      const page = event.target;
-      if (page.id !== 'signin') return;
-      const username = page.data.username || localStorage.getItem('username');
+    ons.getScriptPage().onShow = function() {
+      if (this.id !== 'signin') return;
+      const username = this.data.username || localStorage.getItem('username');
       if (username)
-        page.querySelector('#username').value = username;
-    });
+        this.querySelector('#username').value = username;
+    };
     
-    document.addEventListener('init', (event) => {
-      const page = event.target;
-      if (page.id !== 'signin') return;
-      page.querySelector('#sign_in_button').onclick = (e) => {
-        const username = page.querySelector('#username').value;
-        const password = page.querySelector('#password').value;
+    ons.getScriptPage().onInit = function() {
+      this.querySelector('#sign_in_button').onclick = (e) => {
+        const username = this.querySelector('#username').value;
+        const password = this.querySelector('#password').value;
         Auth.signIn(username, password)
           .then(user => {
             localStorage.setItem('username', user.username);
@@ -36,6 +33,6 @@
           })
         .catch(err => console.log(err));
       };
-    });
+    };
   </script>
 </ons-page>

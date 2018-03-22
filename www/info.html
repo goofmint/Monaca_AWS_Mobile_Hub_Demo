@@ -9,22 +9,20 @@
     <h1>Welcome, <span id="username_label"></span></h1>
   </div>    
   <script>
-    document.addEventListener('show', (event) => {
-      const page = event.target;
-      if (page.id !== 'info') return;
+    ons.getScriptPage().onShow = function() {
       Auth.currentSession()
         .then(session => {
+          // セッション情報はJSON Web Token形式
           const user = JSON.parse(window.atob(session.accessToken.jwtToken.split('.')[1]));
-          page.querySelector('#username_label').innerHTML = user.username;
+          this.querySelector('#username_label').innerHTML = user.username;
         }, err => console.log(err));
-    });
-    document.addEventListener('init', (event) => {
-      const page = event.target;
-      if (page.id !== 'info') return;
-      page.querySelector('#logout').onclick = (e) => {
+    };
+    ons.getScriptPage().onInit = function() {
+      this.querySelector('#logout').onclick = (e) => {
+        // サインアウト処理
         Auth.signOut()
           .then(() => document.getElementById('nav').resetToPage('signup.html'))
       }
-    });
+    };
   </script>
 </ons-page>
