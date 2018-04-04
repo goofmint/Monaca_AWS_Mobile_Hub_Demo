@@ -1,0 +1,19 @@
+<ons-page>
+  <ons-list>
+    <ons-list-header>認証</ons-list-header>
+    <ons-list-item class="goto" data-page="signup">サインアップ</ons-list-item>
+    <ons-list-header>データ</ons-list-header>
+    <ons-list-item class="goto" data-page="save-data">データ保存</ons-list-item>
+  </ons-list>
+  <script>
+    ons.getScriptPage().onInit = function() {
+      const selectors = this.querySelectorAll('.goto');
+      for (let selector of selectors) {
+        selector.onclick = (e) => {
+          const page = e.target.parentNode.dataset['page'];
+          document.getElementById('nav').pushPage(`${page}.html`);
+        };
+      }
+    };
+  </script>
+</ons-page>

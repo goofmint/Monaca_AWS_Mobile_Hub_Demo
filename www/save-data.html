@@ -1,0 +1,24 @@
+<ons-page>
+  <input type="file" id="file" />
+  <ons-card>
+    <img id="image" />
+  </ons-card>
+  <script>
+    ons.getScriptPage().onInit = function() {
+      const me = this;
+      this.querySelector('#file').onchange = (e) => {
+        const file = e.target.files[0];
+        const key = file.name;
+        Storage.put(key, file).then(function(e) {
+          const url = `https://s3.amazonaws.com/${Storage._options.bucket}/public/${key}`;
+          me.querySelector('#image').src = url;
+        });
+      };
+    };
+  </script>
+  <style>
+    #image {
+      width: 100%;
+    }
+  </style>
+</ons-page>
