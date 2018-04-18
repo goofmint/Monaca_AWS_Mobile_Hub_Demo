@@ -1,21 +1,33 @@
 <ons-page>
   <ons-list>
+    <ons-list-header>認証状態</ons-list-header>
+    <ons-list-item class="username_label">ログインしていません</ons-list-item>
     <ons-list-header>認証</ons-list-header>
     <ons-list-item class="goto" data-page="signup">サインアップ</ons-list-item>
     <ons-list-header>ファイル</ons-list-header>
     <ons-list-item class="goto" data-page="save-data">ファイル保存</ons-list-item>
     <ons-list-header>データベース</ons-list-header>
     <ons-list-item class="goto" data-page="database">データ保存</ons-list-item>
+    <ons-list-header>クラウドロジック</ons-list-header>
+    <ons-list-item class="goto" data-page="logic">クラウドロジック</ons-list-item>
   </ons-list>
   <script>
-    ons.getScriptPage().onInit = function() {
-      const selectors = this.querySelectorAll('.goto');
-      for (let selector of selectors) {
-        selector.onclick = (e) => {
-          const page = e.target.parentNode.dataset['page'];
-          document.getElementById('nav').pushPage(`${page}.html`);
-        };
-      }
-    };
+  ons.getScriptPage().onInit = function() {
+    const selectors = this.querySelectorAll('.goto');
+    for (let selector of selectors) {
+      selector.onclick = (e) => {
+        const page = e.target.parentNode.dataset['page'];
+        document.getElementById('nav').pushPage(`${page}.html`);
+      };
+    }
+  };
+  ons.getScriptPage().onShow = function() {
+    Auth.currentSession()
+      .then(session => {
+        // セッション情報はJSON Web Token形式
+        const user = JSON.parse(window.atob(session.accessToken.jwtToken.split('.')[1]));
+        this.querySelector('.username_label').innerHTML = user.username;
+      }, err => console.log(err));
+  }
   </script>
 </ons-page>

@@ -31,7 +31,10 @@
             localStorage.setItem('username', user.username);
             document.getElementById('nav').pushPage('info.html');
           })
-        .catch(err => console.log(err));
+        .catch(err => {
+          ons.notification.alert('ログイン失敗しました')
+          console.log(err)
+        });
       };
     };
   </script>

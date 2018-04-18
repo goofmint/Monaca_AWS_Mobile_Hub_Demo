@@ -7,6 +7,7 @@
   </ons-toolbar>
   <div style="text-align: center; margin-top: 30px;">
     <h1>Welcome, <span id="username_label"></span></h1>
+    <ons-button modifier="large" id="back">Back</ons-button>
   </div>    
   <script>
     ons.getScriptPage().onShow = function() {
@@ -22,6 +23,9 @@
         // サインアウト処理
         Auth.signOut()
           .then(() => document.getElementById('nav').resetToPage('signup.html'))
+      }
+      this.querySelector('#back').onclick = (e) => {
+        document.getElementById('nav').resetToPage('menu.html');
       }
     };
   </script>

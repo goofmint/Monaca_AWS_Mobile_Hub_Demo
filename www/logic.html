@@ -1,0 +1,30 @@
+<ons-page>
+  <ons-list>
+    <ons-list-item>
+      <ons-input id="text" modifier="underbar" placeholder="メッセージ" float></ons-input>
+    </ons-list-item>
+    <ons-list-item>
+      <ons-button modifier="large--quiet" id="echo">エコー</ons-button>
+    </ons-list-item>
+    <div class="result">
+    </div>
+  </ons-list>
+  <script>
+    ons.getScriptPage().onInit = function() {
+      me = this;
+      me.querySelector('#echo').onclick = () => {
+        const text = me.querySelector('#text').value;
+        API.post('GetList', '/items', {
+          body: {text}
+        })
+        .then(response => {
+          const body = JSON.parse(response.requestBody);
+          me.querySelector('.result').innerHTML = body.text;
+        }, err => {
+          ons.notification.alert('エラーです');
+          console.log(err);
+        })
+      }
+    };
+  </script>
+</ons-page>
