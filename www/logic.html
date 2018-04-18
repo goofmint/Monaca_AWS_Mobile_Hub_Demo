@@ -19,9 +19,13 @@
         })
         .then(response => {
           const body = JSON.parse(response.requestBody);
+          Analytics.record('Cloud logic', {
+            success: true, text: body.text
+          });
           me.querySelector('.result').innerHTML = body.text;
         }, err => {
           ons.notification.alert('エラーです');
+          Analytics.record('Execute-echo-failed');
           console.log(err);
         })
       }
