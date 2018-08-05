@@ -26,6 +26,7 @@
       this.querySelector('#sign_in_button').onclick = (e) => {
         const username = this.querySelector('#username').value;
         const password = this.querySelector('#password').value;
+        debugger;
         Auth.signIn(username, password)
           .then(user => {
             localStorage.setItem('username', user.username);

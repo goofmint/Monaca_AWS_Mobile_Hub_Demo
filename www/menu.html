@@ -24,6 +24,9 @@
   ons.getScriptPage().onShow = function() {
     Auth.currentSession()
       .then(session => {
+        console.log(session);
+        debugger;
+        console.log(JSON.stringify(session));
         // セッション情報はJSON Web Token形式
         const user = JSON.parse(window.atob(session.accessToken.jwtToken.split('.')[1]));
         this.querySelector('.username_label').innerHTML = user.username;
